@@ -73,6 +73,57 @@ export const useQuizStore = create<QuizState>((set, get) => ({
       const overall = computeOverallScore(scores);
       fields['pkm'] = String(Math.round((overall / MAX_SCORE) * 100));
 
+      // Build QuickChart radar image URL and save to Kit
+      const chartLabels = categories.map((c) => {
+        const parts: Record<string, string[]> = {
+          'Information Management': ['Information', 'Management'],
+          'Creativity & Idea Management': ['Creativity', '& Ideas'],
+          'Task & Project Management': ['Tasks', '& Projects'],
+          'Vision & Values': ['Vision', '& Values'],
+          'Journaling & Reflection': ['Journaling', '& Reflection'],
+        };
+        return parts[c.label] ?? [c.label];
+      });
+      const chartData = categories.map((c) =>
+        Math.round(((scores[c.id] ?? 0) / MAX_SCORE) * 100),
+      );
+      const chartConfig = {
+        type: 'radar',
+        data: {
+          labels: chartLabels,
+          datasets: [
+            {
+              label: 'Your PKM Profile',
+              data: chartData,
+              backgroundColor: 'rgba(195, 34, 255, 0.15)',
+              borderColor: '#C322FF',
+              borderWidth: 2.5,
+              pointBackgroundColor: categories.map((c) => c.color),
+              pointBorderColor: categories.map((c) => c.color),
+              pointRadius: 8,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            r: {
+              min: 0,
+              max: 100,
+              ticks: { display: false, stepSize: 20 },
+              grid: { color: 'rgba(255, 255, 255, 0.15)' },
+              angleLines: { color: 'rgba(255, 255, 255, 0.15)' },
+              pointLabels: {
+                color: '#CCCCCC',
+                font: { size: 14, weight: '500' },
+              },
+            },
+          },
+          plugins: { legend: { display: false } },
+        },
+      };
+      const chartUrl = `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(chartConfig))}&w=500&h=500&bkg=%230D0D0D`;
+      fields['pkm_chart_url'] = chartUrl;
+
       // Set PKM Area to the lowest-scoring category label
       let lowestId = '';
       let lowestScore = Infinity;
