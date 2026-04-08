@@ -33,8 +33,15 @@ export default function EmailGate() {
         Enter your email to unlock your personalized results and insights.
       </p>
 
-      <div className="email-gate__chart-preview">
-        <RadarChart scores={scores} />
+      <div className="email-gate__chart-container">
+        <div className="email-gate__chart-preview">
+          <RadarChart scores={scores} />
+        </div>
+        <div className="email-gate__overlay">
+          <span className="email-gate__lock">🔒</span>
+          <p className="email-gate__overlay-text">Enter your email below to unlock your full results</p>
+          <span className="email-gate__arrow">↓</span>
+        </div>
       </div>
 
       <form className="email-gate__form" onSubmit={handleSubmit}>
