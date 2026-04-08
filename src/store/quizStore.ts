@@ -93,7 +93,6 @@ export const useQuizStore = create<QuizState>((set, get) => ({
           labels: chartLabels,
           datasets: [
             {
-              label: 'Your PKM Profile',
               data: chartData,
               backgroundColor: 'rgba(195, 34, 255, 0.15)',
               borderColor: '#C322FF',
@@ -101,27 +100,30 @@ export const useQuizStore = create<QuizState>((set, get) => ({
               pointBackgroundColor: categories.map((c) => c.color),
               pointBorderColor: categories.map((c) => c.color),
               pointRadius: 8,
+              pointHoverRadius: 8,
             },
           ],
         },
         options: {
+          layout: { padding: 20 },
           scales: {
             r: {
               min: 0,
               max: 100,
               ticks: { display: false, stepSize: 20 },
-              grid: { color: 'rgba(255, 255, 255, 0.15)' },
-              angleLines: { color: 'rgba(255, 255, 255, 0.15)' },
+              grid: { color: 'rgba(255, 255, 255, 0.12)' },
+              angleLines: { color: 'rgba(255, 255, 255, 0.12)' },
               pointLabels: {
                 color: '#CCCCCC',
-                font: { size: 14, weight: '500' },
+                font: { size: 16, weight: 'bold' },
+                padding: 20,
               },
             },
           },
           plugins: { legend: { display: false } },
         },
       };
-      const chartUrl = `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(chartConfig))}&w=500&h=500&bkg=%230D0D0D`;
+      const chartUrl = `https://quickchart.io/chart?v=4&c=${encodeURIComponent(JSON.stringify(chartConfig))}&w=600&h=600&bkg=%230D0D0D&devicePixelRatio=2`;
       fields['pkm_chart_url'] = chartUrl;
 
       // Set PKM Area to the lowest-scoring category label
