@@ -7,19 +7,45 @@ interface SubscribeParams {
   formId?: number;
 }
 
-export async function subscribeToKit({ email, firstName, fields, formId }: SubscribeParams): Promise<void> {
+function getHeaders() {
   const apiKey = import.meta.env.PUBLIC_KIT_API_KEY;
-
-  if (!apiKey || apiKey === 'your-kit-api-key-here') {
-    console.warn('[Kit] No API key configured — skipping subscription.');
-    return;
-  }
-
-  const headers = {
+  if (!apiKey || apiKey === 'your-kit-api-key-here') return null;
+  return {
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'X-Kit-Api-Key': apiKey,
   };
+}
+
+export async function tagSubscriber(email: string, tagId: number): Promise<void> {
+  const headers = getHeaders();
+  if (!headers) {
+    console.warn('[Kit] No API key configured — skipping tag.');
+    return;
+  }
+
+  const response = await fetch(`${KIT_API_BASE}/tags/${tagId}/subscribers`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ email_address: email }),
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.json().catch(() => null);
+    const message =
+      errorBody?.errors?.[0]?.message ||
+      errorBody?.message ||
+      `Tagging failed (${response.status})`;
+    throw new Error(message);
+  }
+}
+
+export async function subscribeToKit({ email, firstName, fields, formId }: SubscribeParams): Promise<void> {
+  const headers = getHeaders();
+  if (!headers) {
+    console.warn('[Kit] No API key configured — skipping subscription.');
+    return;
+  }
 
   // Create/update subscriber with custom fields
   const subResponse = await fetch(`${KIT_API_BASE}/subscribers`, {

@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useQuizStore, computeCategoryScores, computeOverallScore } from '../store/quizStore';
 import { categories, MAX_SCORE } from '../config/questions';
 import { getInsight } from '../data/insights';
 import { getCTAForLowestCategory } from '../data/ctas';
+import { tagSubscriber } from '../lib/kit';
 import RadarChart from './RadarChart';
 
 /** Convert a raw score (1–5) to a percentage (0–100) */
@@ -13,7 +14,11 @@ function toPercent(raw: number): number {
 export default function ResultsScreen() {
   const answers = useQuizStore((s) => s.answers);
   const firstName = useQuizStore((s) => s.firstName);
+  const email = useQuizStore((s) => s.email);
   const restart = useQuizStore((s) => s.restart);
+
+  const [emailSending, setEmailSending] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   const scores = useMemo(() => computeCategoryScores(answers), [answers]);
   const overall = useMemo(() => computeOverallScore(scores), [scores]);
@@ -44,10 +49,17 @@ export default function ResultsScreen() {
     });
   };
 
-  const handleEmail = () => {
-    const subject = encodeURIComponent('My PKM Profile Results');
-    const body = encodeURIComponent(buildResultsText());
-    window.open(`mailto:?subject=${subject}&body=${body}`, '_self');
+  const handleEmail = async () => {
+    setEmailSending(true);
+    try {
+      await tagSubscriber(email, 18828631);
+      setEmailSent(true);
+    } catch (err) {
+      console.error('Failed to trigger email:', err);
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setEmailSending(false);
+    }
   };
 
   return (
@@ -118,8 +130,12 @@ export default function ResultsScreen() {
       </div>
 
       <div style={{ marginTop: 24, display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-        <button className="btn btn--secondary btn--small" onClick={handleEmail}>
-          Email Results
+        <button
+          className="btn btn--secondary btn--small"
+          onClick={handleEmail}
+          disabled={emailSending || emailSent}
+        >
+          {emailSent ? 'Results Sent!' : emailSending ? 'Sending…' : 'Email Results'}
         </button>
         <button className="btn btn--secondary btn--small" onClick={handleShare}>
           Copy Results
