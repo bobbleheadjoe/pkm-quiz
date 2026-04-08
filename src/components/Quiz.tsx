@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useQuizStore } from '../store/quizStore';
 import WelcomeScreen from './WelcomeScreen';
 import QuestionCard from './QuestionCard';
@@ -7,6 +8,14 @@ import ResultsScreen from './ResultsScreen';
 
 export default function Quiz() {
   const screen = useQuizStore((s) => s.screen);
+  const prevScreen = useRef(screen);
+
+  useEffect(() => {
+    if (prevScreen.current === 'email' && screen === 'results') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    prevScreen.current = screen;
+  }, [screen]);
 
   return (
     <div className="quiz-container">
