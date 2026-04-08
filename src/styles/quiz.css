@@ -500,6 +500,11 @@
 
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 640px) {
+  .quiz-container {
+    justify-content: flex-start;
+    padding-top: 40px;
+  }
+
   .quiz-card {
     padding: 28px 20px;
     border-radius: 12px;
