@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useQuizStore, computeCategoryScores, computeOverallScore } from '../store/quizStore';
 import { categories, MAX_SCORE } from '../config/questions';
 import { getInsight } from '../data/insights';
@@ -19,6 +19,28 @@ export default function ResultsScreen() {
 
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [visibleBars, setVisibleBars] = useState<Set<string>>(new Set());
+  const barRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('data-cat-id');
+            if (id) {
+              setVisibleBars((prev) => new Set(prev).add(id));
+              observer.unobserve(entry.target);
+            }
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+
+    barRefs.current.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   const scores = useMemo(() => computeCategoryScores(answers), [answers]);
   const overall = useMemo(() => computeOverallScore(scores), [scores]);
@@ -96,11 +118,17 @@ export default function ResultsScreen() {
                   {pct}%
                 </span>
               </div>
-              <div className="results__category-bar">
+              <div
+                className="results__category-bar"
+                data-cat-id={cat.id}
+                ref={(el) => {
+                  if (el) barRefs.current.set(cat.id, el);
+                }}
+              >
                 <div
                   className="results__category-bar-fill"
                   style={{
-                    width: `${pct}%`,
+                    width: visibleBars.has(cat.id) ? `${pct}%` : '0%',
                     backgroundColor: cat.color,
                   }}
                 />
