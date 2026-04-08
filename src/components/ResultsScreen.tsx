@@ -19,8 +19,8 @@ export default function ResultsScreen() {
 
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
-  const [visibleBars, setVisibleBars] = useState<Set<string>>(new Set());
-  const barRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const [visibleCats, setVisibleCats] = useState<Set<string>>(new Set());
+  const catRefs = useRef<Map<string, HTMLDivElement>>(new Map());
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,16 +29,16 @@ export default function ResultsScreen() {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute('data-cat-id');
             if (id) {
-              setVisibleBars((prev) => new Set(prev).add(id));
+              setVisibleCats((prev) => new Set(prev).add(id));
               observer.unobserve(entry.target);
             }
           }
         });
       },
-      { threshold: 0.3 },
+      { threshold: 0.15 },
     );
 
-    barRefs.current.forEach((el) => observer.observe(el));
+    catRefs.current.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
@@ -104,8 +104,17 @@ export default function ResultsScreen() {
           const pct = toPercent(raw);
           const insight = getInsight(cat.id, raw);
 
+          const isVisible = visibleCats.has(cat.id);
+
           return (
-            <div key={cat.id} className="results__category">
+            <div
+              key={cat.id}
+              className={`results__category ${isVisible ? 'results__category--visible' : ''}`}
+              data-cat-id={cat.id}
+              ref={(el) => {
+                if (el) catRefs.current.set(cat.id, el);
+              }}
+            >
               <div className="results__category-header">
                 <span className="results__category-name">
                   <span>{cat.emoji}</span>
@@ -118,17 +127,11 @@ export default function ResultsScreen() {
                   {pct}%
                 </span>
               </div>
-              <div
-                className="results__category-bar"
-                data-cat-id={cat.id}
-                ref={(el) => {
-                  if (el) barRefs.current.set(cat.id, el);
-                }}
-              >
+              <div className="results__category-bar">
                 <div
                   className="results__category-bar-fill"
                   style={{
-                    width: visibleBars.has(cat.id) ? `${pct}%` : '0%',
+                    width: isVisible ? `${pct}%` : '0%',
                     backgroundColor: cat.color,
                   }}
                 />
