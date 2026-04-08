@@ -21,13 +21,13 @@ export default function ResultsScreen() {
 
   const overallPercent = toPercent(overall);
 
-  const handleShare = () => {
+  const buildResultsText = () => {
     const lines = categories.map((cat) => {
       const pct = toPercent(scores[cat.id] ?? 0);
       return `${cat.emoji} ${cat.label}: ${pct}%`;
     });
 
-    const text = [
+    return [
       `My PKM Profile Results`,
       `Overall: ${overallPercent}%`,
       '',
@@ -35,10 +35,19 @@ export default function ResultsScreen() {
       '',
       'Take the quiz: https://quiz.practicalpkm.com',
     ].join('\n');
+  };
 
+  const handleShare = () => {
+    const text = buildResultsText();
     navigator.clipboard.writeText(text).then(() => {
       alert('Results copied to clipboard!');
     });
+  };
+
+  const handleEmail = () => {
+    const subject = encodeURIComponent('My PKM Profile Results');
+    const body = encodeURIComponent(buildResultsText());
+    window.open(`mailto:?subject=${subject}&body=${body}`, '_self');
   };
 
   return (
@@ -108,7 +117,10 @@ export default function ResultsScreen() {
         </a>
       </div>
 
-      <div style={{ marginTop: 24, display: 'flex', gap: 12, justifyContent: 'center' }}>
+      <div style={{ marginTop: 24, display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <button className="btn btn--secondary btn--small" onClick={handleEmail}>
+          Email Results
+        </button>
         <button className="btn btn--secondary btn--small" onClick={handleShare}>
           Copy Results
         </button>
