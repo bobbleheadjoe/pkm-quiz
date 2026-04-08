@@ -1,0 +1,78 @@
+/* ============================================================
+   PKM WHEEL OF LIFE QUIZ — Global Styles
+   ============================================================ */
+
+/* ── Brand Colors ───────────────────────────────────────── */
+:root {
+  --ppkm-black: #000000;
+  --ppkm-purple: #C322FF;
+  --ppkm-blue: #2469FF;
+  --ppkm-white: #FFFFFF;
+  --ppkm-gradient: linear-gradient(135deg, #C322FF, #2469FF);
+
+  /* Quiz tokens */
+  --quiz-bg: #0A0A0A;
+  --quiz-card-bg: #141414;
+  --quiz-card-border: #222222;
+  --quiz-text-primary: #FFFFFF;
+  --quiz-text-secondary: #AAAAAA;
+  --quiz-text-muted: #666666;
+  --quiz-radius: 16px;
+  --quiz-radius-sm: 10px;
+  --quiz-max-width: 720px;
+  --quiz-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Typography */
+  --font-primary: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-accent: 'Sketchnote Text', cursive, sans-serif;
+}
+
+/* ── Reset ──────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-primary);
+  background: var(--quiz-bg);
+  color: var(--quiz-text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── Utilities ──────────────────────────────────────────── */
+.gradient-text {
+  background: var(--ppkm-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-bg {
+  background: var(--ppkm-gradient);
+}
+
+.gradient-border {
+  position: relative;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: var(--ppkm-gradient);
+  z-index: -1;
+}
