@@ -70,6 +70,8 @@ export const useQuizStore = create<QuizState>((set, get) => ({
         const pct = Math.round(((scores[cat.id] ?? 0) / MAX_SCORE) * 100);
         fields[cat.kitFieldName] = String(pct);
       }
+      const overall = computeOverallScore(scores);
+      fields['pkm'] = String(Math.round((overall / MAX_SCORE) * 100));
 
       await subscribeToKit({ email, firstName, fields });
       set({ screen: 'results', isSubmitting: false });
