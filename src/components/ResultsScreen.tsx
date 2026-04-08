@@ -129,7 +129,13 @@ export default function ResultsScreen() {
         </a>
       </div>
 
-      <div style={{ marginTop: 24, display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+      {emailSent && (
+        <p style={{ textAlign: 'center', color: '#AAAAAA', fontSize: '0.9rem', marginTop: 16 }}>
+          ✅ Check your inbox — your results should arrive within a couple of minutes.
+        </p>
+      )}
+
+      <div style={{ marginTop: emailSent ? 12 : 24, display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
         <button
           className="btn btn--secondary btn--small"
           onClick={handleEmail}
