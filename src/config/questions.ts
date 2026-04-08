@@ -32,7 +32,7 @@ export const categories: Category[] = [
     questions: [
       {
         id: 'im-1',
-        text: 'When I find a valuable article, video, or podcast, I have a reliable system to capture it so nothing falls through the cracks.',
+        text: 'When I find an interesting article, video, or podcast, I have a reliable system to capture it so nothing falls through the cracks.',
         description: 'Think about your capture workflow for new information.',
       },
       {
@@ -42,7 +42,7 @@ export const categories: Category[] = [
       },
       {
         id: 'im-3',
-        text: 'I regularly process my inbox and read-later queue rather than letting it pile up indefinitely.',
+        text: 'I regularly process my inboxes and read-later queue rather than letting it pile up indefinitely.',
         description: 'How often do you review and process what you\'ve captured?',
       },
       {
@@ -104,8 +104,8 @@ export const categories: Category[] = [
       },
       {
         id: 'tp-3',
-        text: 'I can clearly see which tasks are most important right now versus tasks that can wait.',
-        description: 'How well does your system surface priority?',
+        text: 'I am clear on my priorities and consistently take action on what is most important.',
+        description: 'Are you able to focus on the things that really matter?',
       },
       {
         id: 'tp-4',
@@ -161,8 +161,8 @@ export const categories: Category[] = [
       },
       {
         id: 'jr-2',
-        text: 'My journaling goes beyond logging events — I reflect on what I learned, how I felt, and what I\'d do differently.',
-        description: 'Consider the depth of your reflection practice.',
+        text: 'When I discover an insight during journaling or reflection, I take concrete action on it — adjusting a habit, updating a goal, or changing my approach.',
+        description: 'Think about whether your reflections lead to real changes in your behavior or systems.',
       },
       {
         id: 'jr-3',
