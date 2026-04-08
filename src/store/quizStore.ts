@@ -73,7 +73,21 @@ export const useQuizStore = create<QuizState>((set, get) => ({
       const overall = computeOverallScore(scores);
       fields['pkm'] = String(Math.round((overall / MAX_SCORE) * 100));
 
-      await subscribeToKit({ email, firstName, fields });
+      // Set PKM Area to the lowest-scoring category label
+      let lowestId = '';
+      let lowestScore = Infinity;
+      for (const [id, score] of Object.entries(scores)) {
+        if (score < lowestScore) {
+          lowestScore = score;
+          lowestId = id;
+        }
+      }
+      const lowestCat = categories.find((c) => c.id === lowestId);
+      if (lowestCat) {
+        fields['pkm_area'] = lowestCat.label;
+      }
+
+      await subscribeToKit({ email, firstName, fields, formId: 9024182 });
       set({ screen: 'results', isSubmitting: false });
     } catch (err) {
       set({

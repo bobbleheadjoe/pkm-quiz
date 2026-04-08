@@ -1,12 +1,13 @@
-const KIT_API_URL = 'https://api.kit.com/v4/subscribers';
+const KIT_API_BASE = 'https://api.kit.com/v4';
 
 interface SubscribeParams {
   email: string;
   firstName: string;
   fields: Record<string, string>;
+  formId?: number;
 }
 
-export async function subscribeToKit({ email, firstName, fields }: SubscribeParams): Promise<void> {
+export async function subscribeToKit({ email, firstName, fields, formId }: SubscribeParams): Promise<void> {
   const apiKey = import.meta.env.PUBLIC_KIT_API_KEY;
 
   if (!apiKey || apiKey === 'your-kit-api-key-here') {
@@ -14,13 +15,16 @@ export async function subscribeToKit({ email, firstName, fields }: SubscribePara
     return;
   }
 
-  const response = await fetch(KIT_API_URL, {
+  const headers = {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    'X-Kit-Api-Key': apiKey,
+  };
+
+  // Create/update subscriber with custom fields
+  const subResponse = await fetch(`${KIT_API_BASE}/subscribers`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      'X-Kit-Api-Key': apiKey,
-    },
+    headers,
     body: JSON.stringify({
       email_address: email,
       first_name: firstName,
@@ -29,14 +33,21 @@ export async function subscribeToKit({ email, firstName, fields }: SubscribePara
     }),
   });
 
-  // 200 = updated, 201 = created, 202 = async processing
-  if (response.ok) return;
+  if (!subResponse.ok) {
+    const errorBody = await subResponse.json().catch(() => null);
+    const message =
+      errorBody?.errors?.[0]?.message ||
+      errorBody?.message ||
+      `Subscription failed (${subResponse.status})`;
+    throw new Error(message);
+  }
 
-  const errorBody = await response.json().catch(() => null);
-  const message =
-    errorBody?.errors?.[0]?.message ||
-    errorBody?.message ||
-    `Subscription failed (${response.status})`;
-
-  throw new Error(message);
+  // Add subscriber to form if specified
+  if (formId) {
+    await fetch(`${KIT_API_BASE}/forms/${formId}/subscribers`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ email_address: email }),
+    });
+  }
 }
