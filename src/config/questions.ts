@@ -26,7 +26,7 @@ export const categories: Category[] = [
   {
     id: 'information-management',
     label: 'Information Management',
-    kitFieldName: 'PKM Information Management',
+    kitFieldName: 'pkm_information_management',
     emoji: '📥',
     color: '#C322FF',
     questions: [
@@ -57,7 +57,7 @@ export const categories: Category[] = [
   {
     id: 'creativity',
     label: 'Creativity & Idea Management',
-    kitFieldName: 'PKM Creativity',
+    kitFieldName: 'pkm_creativity',
     emoji: '💡',
     color: '#7B46FF',
     questions: [
@@ -88,7 +88,7 @@ export const categories: Category[] = [
   {
     id: 'task-project',
     label: 'Task & Project Management',
-    kitFieldName: 'PKM Task Management',
+    kitFieldName: 'pkm_task_management',
     emoji: '✅',
     color: '#2469FF',
     questions: [
@@ -119,7 +119,7 @@ export const categories: Category[] = [
   {
     id: 'vision-values',
     label: 'Vision & Values',
-    kitFieldName: 'PKM Vision Values',
+    kitFieldName: 'pkm_vision_values',
     emoji: '🧭',
     color: '#1B9EFF',
     questions: [
@@ -150,7 +150,7 @@ export const categories: Category[] = [
   {
     id: 'journaling',
     label: 'Journaling & Reflection',
-    kitFieldName: 'PKM Journaling',
+    kitFieldName: 'pkm_journaling',
     emoji: '📓',
     color: '#22D1EE',
     questions: [
