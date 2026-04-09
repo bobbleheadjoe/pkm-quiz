@@ -10,13 +10,25 @@
   --ppkm-white: #FFFFFF;
   --ppkm-gradient: linear-gradient(135deg, #C322FF, #2469FF);
 
-  /* Quiz tokens */
+  /* Quiz tokens — dark (default) */
   --quiz-bg: #0A0A0A;
   --quiz-card-bg: #141414;
   --quiz-card-border: #222222;
   --quiz-text-primary: #FFFFFF;
   --quiz-text-secondary: #AAAAAA;
   --quiz-text-muted: #666666;
+  --quiz-subtle-bg: rgba(255, 255, 255, 0.05);
+  --quiz-subtle-bg-hover: rgba(195, 34, 255, 0.08);
+  --quiz-grid-line: rgba(255, 255, 255, 0.08);
+  --quiz-chart-label: #CCCCCC;
+  --quiz-tooltip-bg: #1A1A1A;
+  --quiz-tooltip-border: #333333;
+  --quiz-category-bg: rgba(255, 255, 255, 0.03);
+  --quiz-cta-bg: rgba(195, 34, 255, 0.08);
+  --quiz-cta-border: rgba(195, 34, 255, 0.2);
+  --quiz-input-bg: rgba(255, 255, 255, 0.05);
+  --quiz-spinner-track: rgba(255, 255, 255, 0.3);
+  --quiz-spinner-head: white;
   --quiz-radius: 16px;
   --quiz-radius-sm: 10px;
   --quiz-max-width: 720px;
@@ -25,6 +37,28 @@
   /* Typography */
   --font-primary: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-accent: 'Sketchnote Text', cursive, sans-serif;
+}
+
+/* ── Light theme ───────────────────────────────────────── */
+[data-theme="light"] {
+  --quiz-bg: #F5F5F7;
+  --quiz-card-bg: #FFFFFF;
+  --quiz-card-border: #E0E0E0;
+  --quiz-text-primary: #1A1A1A;
+  --quiz-text-secondary: #555555;
+  --quiz-text-muted: #999999;
+  --quiz-subtle-bg: rgba(0, 0, 0, 0.04);
+  --quiz-subtle-bg-hover: rgba(195, 34, 255, 0.06);
+  --quiz-grid-line: rgba(0, 0, 0, 0.08);
+  --quiz-chart-label: #444444;
+  --quiz-tooltip-bg: #FFFFFF;
+  --quiz-tooltip-border: #E0E0E0;
+  --quiz-category-bg: rgba(0, 0, 0, 0.02);
+  --quiz-cta-bg: rgba(195, 34, 255, 0.06);
+  --quiz-cta-border: rgba(195, 34, 255, 0.15);
+  --quiz-input-bg: rgba(0, 0, 0, 0.03);
+  --quiz-spinner-track: rgba(0, 0, 0, 0.15);
+  --quiz-spinner-head: #1A1A1A;
 }
 
 /* ── Reset ──────────────────────────────────────────────── */

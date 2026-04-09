@@ -23,12 +23,28 @@ const SHORT_LABELS: Record<string, string[]> = {
   'Journaling & Reflection': ['Journaling', '& Reflection'],
 };
 
+function getThemeColors() {
+  if (typeof document === 'undefined') {
+    return { gridLine: 'rgba(255,255,255,0.08)', label: '#CCCCCC', tooltipBg: '#1A1A1A', tooltipTitle: '#FFFFFF', tooltipBody: '#AAAAAA', tooltipBorder: '#333333' };
+  }
+  const style = getComputedStyle(document.documentElement);
+  return {
+    gridLine: style.getPropertyValue('--quiz-grid-line').trim(),
+    label: style.getPropertyValue('--quiz-chart-label').trim(),
+    tooltipBg: style.getPropertyValue('--quiz-tooltip-bg').trim(),
+    tooltipTitle: style.getPropertyValue('--quiz-text-primary').trim(),
+    tooltipBody: style.getPropertyValue('--quiz-text-secondary').trim(),
+    tooltipBorder: style.getPropertyValue('--quiz-tooltip-border').trim(),
+  };
+}
+
 export default function RadarChart({ scores }: RadarChartProps) {
   const labels = categories.map((c) => SHORT_LABELS[c.label] ?? [c.label]);
   const data = categories.map((c) =>
     Math.round(((scores[c.id] ?? 0) / MAX_SCORE) * 100),
   );
   const colors = categories.map((c) => c.color);
+  const theme = getThemeColors();
 
   const isMobile =
     typeof window !== 'undefined' && window.innerWidth < 500;
@@ -62,17 +78,17 @@ export default function RadarChart({ scores }: RadarChartProps) {
         min: 0,
         max: 100,
         ticks: {
-          display: false, // hide 20/40/60/80/100 numbers to give the chart more room
+          display: false,
           stepSize: 20,
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.08)',
+          color: theme.gridLine,
         },
         angleLines: {
-          color: 'rgba(255, 255, 255, 0.08)',
+          color: theme.gridLine,
         },
         pointLabels: {
-          color: '#CCCCCC',
+          color: theme.label,
           font: {
             size: isMobile ? 12 : 14,
             weight: '500' as const,
@@ -85,10 +101,10 @@ export default function RadarChart({ scores }: RadarChartProps) {
     },
     plugins: {
       tooltip: {
-        backgroundColor: '#1A1A1A',
-        titleColor: '#FFFFFF',
-        bodyColor: '#AAAAAA',
-        borderColor: '#333333',
+        backgroundColor: theme.tooltipBg,
+        titleColor: theme.tooltipTitle,
+        bodyColor: theme.tooltipBody,
+        borderColor: theme.tooltipBorder,
         borderWidth: 1,
         cornerRadius: 8,
         padding: 12,

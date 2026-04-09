@@ -5,6 +5,7 @@ import QuestionCard from './QuestionCard';
 import ProgressBar from './ProgressBar';
 import EmailGate from './EmailGate';
 import ResultsScreen from './ResultsScreen';
+import ThemeToggle from './ThemeToggle';
 
 export default function Quiz() {
   const screen = useQuizStore((s) => s.screen);
@@ -19,6 +20,7 @@ export default function Quiz() {
 
   return (
     <div className="quiz-container">
+      <ThemeToggle />
       <div className="quiz-card">
         {screen === 'welcome' && (
           <div className="fade-in">

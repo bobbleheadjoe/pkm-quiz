@@ -23,7 +23,7 @@ export const insights: CategoryInsight[] = [
       {
         range: [1, 2.4],
         heading: 'Room to Grow',
-        text: 'You might be losing track of valuable information. Start with one reliable capture tool — even a simple notes app — and build the habit of saving things in one place before worrying about organization.',
+        text: 'You might be losing track of valuable information. Start with one reliable capture tool — even a simple notes app — and build the habit of saving things in one place before worrying too much about keeping it all organized.',
       },
       {
         range: [2.5, 3.9],

@@ -164,7 +164,7 @@
   color: var(--quiz-text-muted);
   margin-bottom: 20px;
   padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--quiz-subtle-bg);
   border-radius: 20px;
 }
 
@@ -230,7 +230,7 @@
 .scale__btn:hover {
   border-color: var(--ppkm-purple);
   color: var(--quiz-text-primary);
-  background: rgba(195, 34, 255, 0.08);
+  background: var(--quiz-subtle-bg-hover);
 }
 
 .scale__btn--selected {
@@ -276,7 +276,7 @@
   border-radius: 4px;
   font-family: var(--font-primary);
   font-size: 0.7rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--quiz-subtle-bg);
 }
 
 /* ── Email Gate ─────────────────────────────────────────── */
@@ -353,7 +353,7 @@
   padding: 14px 16px;
   border: 1px solid var(--quiz-card-border);
   border-radius: var(--quiz-radius-sm);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--quiz-subtle-bg);
   color: var(--quiz-text-primary);
   font-family: var(--font-primary);
   font-size: 1rem;
@@ -425,7 +425,7 @@
 }
 
 .results__category {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--quiz-category-bg);
   border-radius: var(--quiz-radius-sm);
   padding: 20px;
   border: 1px solid var(--quiz-card-border);
@@ -490,8 +490,8 @@
 .results__cta {
   padding: 32px;
   border-radius: var(--quiz-radius);
-  background: rgba(195, 34, 255, 0.08);
-  border: 1px solid rgba(195, 34, 255, 0.2);
+  background: var(--quiz-cta-bg);
+  border: 1px solid var(--quiz-cta-border);
 }
 
 .results__cta-title {
@@ -504,6 +504,30 @@
   color: var(--quiz-text-secondary);
   font-size: 0.95rem;
   margin-bottom: 20px;
+}
+
+/* ── Theme Toggle ──────────────────────────────────────── */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--quiz-card-border);
+  background: var(--quiz-card-bg);
+  color: var(--quiz-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--quiz-transition);
+}
+
+.theme-toggle:hover {
+  border-color: var(--ppkm-purple);
+  color: var(--quiz-text-primary);
 }
 
 /* ── Responsive ─────────────────────────────────────────── */
