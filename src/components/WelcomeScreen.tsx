@@ -12,7 +12,7 @@ export default function WelcomeScreen() {
         className="welcome__logomark"
       />
       <h1 className="welcome__title">
-        <span className="gradient-text">PKM Assessment</span>
+        <span className="gradient-text">Take the Free PKM Assessment</span>
       </h1>
       <p className="welcome__subtitle">
         Discover your personal knowledge management strengths and growth areas
@@ -20,7 +20,7 @@ export default function WelcomeScreen() {
       </p>
       <div className="welcome__meta">
         <span>❓ {totalQuestions} questions</span>
-        <span>⏰ ~3 minutes</span>
+        <span>⏰ ~5 minutes</span>
         <span>📊 Instant results</span>
       </div>
       <button className="btn btn--primary" onClick={startQuiz}>
