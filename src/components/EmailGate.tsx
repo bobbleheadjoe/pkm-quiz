@@ -27,7 +27,7 @@ export default function EmailGate() {
   return (
     <div className="email-gate">
       <h2 className="email-gate__title">
-        <span className="gradient-text">Your PKM Profile is Ready!</span>
+        <span className="gradient-text">Your PKM Diagnostic Report is Ready!</span>
       </h2>
       <p className="email-gate__subtitle">
         Enter your email to unlock your personalized results and insights.

@@ -60,7 +60,7 @@ export default function ResultsScreen() {
       '',
       ...lines,
       '',
-      'Take the quiz: https://quiz.practicalpkm.com',
+      'Take the assessment: https://quiz.practicalpkm.com',
     ].join('\n');
   };
 
@@ -178,7 +178,7 @@ export default function ResultsScreen() {
           Copy Results
         </button>
         <button className="btn btn--secondary btn--small" onClick={restart}>
-          Retake Quiz
+          Retake Assessment
         </button>
       </div>
     </div>
