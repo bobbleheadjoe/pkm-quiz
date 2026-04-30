@@ -60,7 +60,7 @@ export default function ResultsScreen() {
       '',
       ...lines,
       '',
-      'Take the assessment: https://quiz.practicalpkm.com',
+      'Take the assessment: https://profile.practicalpkm.com',
     ].join('\n');
   };
 
