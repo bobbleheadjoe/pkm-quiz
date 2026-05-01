@@ -10,7 +10,7 @@ export default function WelcomeScreen() {
         <div className="landing__blob" aria-hidden="true" />
 
         <p className="landing__eyebrow gradient-text">
-          A Free Tool by Mike Schmitz
+          Five dimensions. One profile. Yours.
         </p>
 
         <h1 className="landing__title">
