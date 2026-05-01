@@ -18,16 +18,19 @@ export default function Quiz() {
     prevScreen.current = screen;
   }, [screen]);
 
+  if (screen === 'welcome') {
+    return (
+      <>
+        <ThemeToggle />
+        <WelcomeScreen />
+      </>
+    );
+  }
+
   return (
     <div className="quiz-container">
       <ThemeToggle />
       <div className="quiz-card">
-        {screen === 'welcome' && (
-          <div className="fade-in">
-            <WelcomeScreen />
-          </div>
-        )}
-
         {screen === 'questions' && (
           <div>
             <ProgressBar />
