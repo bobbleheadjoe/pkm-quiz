@@ -527,22 +527,21 @@
 
 .landing__blob {
   position: absolute;
-  top: -260px;
+  top: -10rem; /* -top-40 */
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
-  height: 420px;
-  max-width: 90vw;
+  width: 700px;  /* w-[700px] */
+  height: 500px; /* h-[500px] */
   background: var(--ppkm-gradient);
-  border-radius: 50%;
-  opacity: 0.22;
-  filter: blur(80px);
+  border-radius: 9999px; /* rounded-full */
+  opacity: 0.3; /* opacity-30 */
+  filter: blur(64px); /* blur-3xl */
   z-index: -1;
   pointer-events: none;
 }
 
 [data-theme="light"] .landing__blob {
-  opacity: 0.15;
+  opacity: 0.18;
 }
 
 .landing__eyebrow {
