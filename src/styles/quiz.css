@@ -527,22 +527,22 @@
 
 .landing__blob {
   position: absolute;
-  top: -160px;
+  top: -200px;
   left: 50%;
   transform: translateX(-50%);
-  width: 700px;
-  height: 500px;
-  max-width: 90vw;
+  width: 1100px;
+  height: 700px;
+  max-width: 120vw;
   background: var(--ppkm-gradient);
   border-radius: 50%;
-  opacity: 0.28;
-  filter: blur(80px);
+  opacity: 0.35;
+  filter: blur(120px);
   z-index: -1;
   pointer-events: none;
 }
 
 [data-theme="light"] .landing__blob {
-  opacity: 0.18;
+  opacity: 0.2;
 }
 
 .landing__eyebrow {
