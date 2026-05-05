@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { categories, shuffledQuestions, totalQuestions, MAX_SCORE } from '../config/questions';
 import { subscribeToKit } from '../lib/kit';
 
@@ -24,7 +25,9 @@ interface QuizState {
   restart: () => void;
 }
 
-export const useQuizStore = create<QuizState>((set, get) => ({
+export const useQuizStore = create<QuizState>()(
+  persist(
+    (set, get) => ({
   screen: 'welcome',
   currentQuestionIndex: 0,
   answers: {},
@@ -161,7 +164,40 @@ export const useQuizStore = create<QuizState>((set, get) => ({
       isSubmitting: false,
       submitError: null,
     }),
-}));
+    }),
+    {
+      name: 'pkm-quiz-state',
+      storage: createJSONStorage(() => localStorage),
+      // Only persist user-facing state, not transient UI state
+      partialize: (state) => ({
+        screen: state.screen,
+        currentQuestionIndex: state.currentQuestionIndex,
+        answers: state.answers,
+        firstName: state.firstName,
+        email: state.email,
+      }),
+      onRehydrateStorage: () => (state) => {
+        // Reset transient submission state on reload
+        if (state) {
+          state.isSubmitting = false;
+          state.submitError = null;
+
+          // If mid-quiz, jump to the first unanswered question
+          // (since the shuffle order may have changed)
+          if (state.screen === 'questions') {
+            const firstUnanswered = shuffledQuestions.findIndex(
+              (q) => state.answers[q.id] == null,
+            );
+            state.currentQuestionIndex =
+              firstUnanswered === -1
+                ? Math.min(state.currentQuestionIndex, totalQuestions - 1)
+                : firstUnanswered;
+          }
+        }
+      },
+    },
+  ),
+);
 
 // ── Pure utility functions (not in store, no snapshot issues) ──
 
