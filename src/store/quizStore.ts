@@ -168,31 +168,32 @@ export const useQuizStore = create<QuizState>()(
     {
       name: 'pkm-quiz-state',
       storage: createJSONStorage(() => localStorage),
-      // Only persist user-facing state, not transient UI state
-      partialize: (state) => ({
-        screen: state.screen,
-        currentQuestionIndex: state.currentQuestionIndex,
-        answers: state.answers,
-        firstName: state.firstName,
-        email: state.email,
-      }),
+      // Only persist meaningful state once the user reaches the email
+      // gate or results screen. Mid-quiz state is intentionally NOT
+      // saved — refreshing will restart the assessment.
+      partialize: (state) => {
+        if (state.screen === 'email' || state.screen === 'results') {
+          return {
+            screen: state.screen,
+            currentQuestionIndex: state.currentQuestionIndex,
+            answers: state.answers,
+            firstName: state.firstName,
+            email: state.email,
+          };
+        }
+        return {
+          screen: 'welcome' as const,
+          currentQuestionIndex: 0,
+          answers: {},
+          firstName: '',
+          email: '',
+        };
+      },
       onRehydrateStorage: () => (state) => {
         // Reset transient submission state on reload
         if (state) {
           state.isSubmitting = false;
           state.submitError = null;
-
-          // If mid-quiz, jump to the first unanswered question
-          // (since the shuffle order may have changed)
-          if (state.screen === 'questions') {
-            const firstUnanswered = shuffledQuestions.findIndex(
-              (q) => state.answers[q.id] == null,
-            );
-            state.currentQuestionIndex =
-              firstUnanswered === -1
-                ? Math.min(state.currentQuestionIndex, totalQuestions - 1)
-                : firstUnanswered;
-          }
         }
       },
     },
