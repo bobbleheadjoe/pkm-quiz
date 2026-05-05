@@ -49,7 +49,7 @@
   --quiz-text-muted: #999999;
   --quiz-subtle-bg: rgba(0, 0, 0, 0.04);
   --quiz-subtle-bg-hover: rgba(195, 34, 255, 0.06);
-  --quiz-grid-line: rgba(0, 0, 0, 0.08);
+  --quiz-grid-line: rgba(0, 0, 0, 0.18);
   --quiz-chart-label: #444444;
   --quiz-tooltip-bg: #FFFFFF;
   --quiz-tooltip-border: #E0E0E0;

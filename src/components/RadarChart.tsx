@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -44,7 +45,18 @@ export default function RadarChart({ scores }: RadarChartProps) {
     Math.round(((scores[c.id] ?? 0) / MAX_SCORE) * 100),
   );
   const colors = categories.map((c) => c.color);
-  const theme = getThemeColors();
+
+  // Re-read theme colors when data-theme attribute changes
+  const [theme, setTheme] = useState(() => getThemeColors());
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const observer = new MutationObserver(() => setTheme(getThemeColors()));
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const isMobile =
     typeof window !== 'undefined' && window.innerWidth < 500;
